@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#E52726" />
+  <link rel="manifest" href="manifest.json" />
+  <title>AM/NS Bandhan — Sell, Learn &amp; Grow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body data-mode="sell">
+  <div class="mobile-shell">
+    <!-- Top App Bar -->
+    <header class="topbar">
+      <button type="button" class="circle-brand-btn" id="brandHomeBtn" title="Home">
+        <span class="amns-slash-icon" aria-hidden="true"></span>
+      </button>
+
+      <div class="topbar-right">
+        <div class="mode-switch" role="group" aria-label="Switch between Earn and Learn">
+          <button type="button" class="mode-btn active" data-mode="sell">Earn</button>
+          <button type="button" class="mode-btn" data-mode="learn">Learn</button>
+        </div>
+        <button type="button" class="circle-avatar-btn" id="openAccountBtn" title="My Account">RB</button>
+      </div>
+    </header>
+
+    <!-- ==================== SCROLLABLE SELL HOME (ACTION-FIRST COCKPIT) ==================== -->
+    <section class="home-scroll" id="firstScreen" aria-label="Sell Optigal Home">
+      <!-- 1. HERO SECTION: YOUR Mg+ JOURNEY -->
+      <div class="mg-home-hero">
+        <div class="mgh-top">
+          <span class="mgh-badge">POWERED BY Mg⁺ • RE0120</span>
+          <span class="mgh-rank">#14 India • #1 Beed</span>
+        </div>
+        <h1 class="mgh-title">Your <strong>Mg⁺ Journey</strong></h1>
+        <div class="mgh-stats">
+          <div><strong>391.68 MT</strong><span>Lifetime Vol</span></div>
+          <div><strong>5 Mo 🔥</strong><span>Elite Streak</span></div>
+          <div><strong>5.5T Left</strong><span>For Nov Elite</span></div>
+        </div>
+        <div class="mgh-bar-wrap">
+          <div class="mgh-bar-track"><div class="mgh-bar-fill" style="width:93%"></div></div>
+          <div class="mgh-bar-meta"><span>Nov: 69.45 / 75 MT</span><strong>Just 5.5T → 90,000 pts</strong></div>
+        </div>
+        <div class="mgh-actions">
+          <button type="button" class="btn btn-red btn-grow" data-launch="magnesium">⚡ Your Mg⁺ Journey →</button>
+          <button type="button" class="btn btn-dark" id="fsEliteCallout" data-launch="invoices">Upload Invoice</button>
+        </div>
+      </div>
+
+      <!-- Quick Counter Bar -->
+      <div class="fs-header">
+        <div class="fs-cta-row">
+          <button type="button" class="btn btn-pill-outline btn-grow" data-launch="quote">+ Create Quote</button>
+          <button type="button" class="btn btn-pill-outline btn-grow" data-launch="recommend">Product Guide</button>
+        </div>
+        <div class="rate-strip" aria-label="Today's Indicative Rates">
+          <button type="button" class="rate-chip" data-rate-tier="core"><span>Core</span><strong>₹84</strong>/kg</button>
+          <button type="button" class="rate-chip" data-rate-tier="pure"><span>Pure</span><strong>₹92</strong>/kg</button>
+          <button type="button" class="rate-chip" data-rate-tier="prime"><span>Prime</span><strong>₹104</strong>/kg</button>
+          <button type="button" class="rate-chip" data-rate-tier="pinnacle"><span>Pinnacle</span><strong>₹116</strong>/kg</button>
+        </div>
+      </div>
+
+      <!-- 2. WINNING: Points Ladder + 2-Col Deals + Action Nudge -->
+      <div class="hero-metrics-stack">
+        <button type="button" class="metric-card sand" data-launch="earnings">
+          <div class="mc-top">
+            <div class="mc-title-wrap">
+              <span class="mc-icon-svg">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+              </span>
+              <span class="mc-label">Points Ladder</span>
+            </div>
+            <span class="mc-dark-pill">Total: 3,21,000 pts</span>
+          </div>
+          <div class="mc-number-row">
+            <span class="mc-big">₹67,500</span>
+            <span class="mc-denom" id="fsRewardsPts">ready • 1,35,000 pts</span>
+          </div>
+          <div class="pts-ladder">
+            <div class="pl-step">
+              <span>1. Pending</span>
+              <strong>1,65,000</strong>
+            </div>
+            <div class="pl-step active">
+              <span>2. Unlocked</span>
+              <strong id="fsLadderReady">1,35,000</strong>
+            </div>
+            <div class="pl-step">
+              <span>3. Redeemed</span>
+              <strong>21,000</strong>
+            </div>
+          </div>
+        </button>
+
+        <div class="kpi-grid-2">
+          <button type="button" class="metric-card lavender compact" data-launch="quote">
+            <div class="mc-top">
+              <span class="mc-label">Quotes</span>
+              <span class="mc-dark-pill" id="fsQuoteGoalPill">70%</span>
+            </div>
+            <div class="mc-number-row">
+              <span class="mc-big" id="fsKpiQuotes">14</span>
+              <span class="mc-denom">/ 20</span>
+            </div>
+            <div class="pill-blocks" id="fsQuoteBlocks" aria-hidden="true">
+              <span class="pblock filled-lavender"></span><span class="pblock filled-lavender"></span>
+              <span class="pblock filled-lavender"></span><span class="pblock filled-lavender"></span>
+              <span class="pblock filled-lavender"></span><span class="pblock"></span><span class="pblock"></span>
+            </div>
+          </button>
+
+          <button type="button" class="metric-card ice compact" data-launch="leads">
+            <div class="mc-top">
+              <span class="mc-label">Leads</span>
+              <span class="mc-dark-pill" id="fsLeadBadge">4 Due</span>
+            </div>
+            <div class="mc-number-row">
+              <span class="mc-big" id="fsKpiFollowups">9</span>
+              <span class="mc-denom">/ 12</span>
+            </div>
+            <div class="pill-blocks" id="fsFollowupBlocks" aria-hidden="true">
+              <span class="pblock filled-ice"></span><span class="pblock filled-ice"></span>
+              <span class="pblock filled-ice"></span><span class="pblock filled-ice"></span>
+              <span class="pblock filled-ice"></span><span class="pblock"></span><span class="pblock"></span>
+            </div>
+          </button>
+        </div>
+
+        <button type="button" class="nudge-pill" id="fsActionNudge" data-launch="invoices">
+          <span>⚠️ <strong>GT/5069/26-27 (33.25 MT)</strong> rejected — vendor name mismatch</span>
+          <span class="nudge-cta">Fix →</span>
+        </button>
+      </div>
+
+      <!-- 3. TRUST PROOF 1: Regional Marketing Around You -->
+      <div>
+        <div class="fs-section-row">
+          <div class="fs-section-label" style="margin-bottom:0">Demand Around You • Beed</div>
+          <button type="button" class="btn-mini-link" data-launch="proof">10km Ads →</button>
+        </div>
+        <div class="h-scroll-row" id="fsRegionalMarketing"></div>
+      </div>
+
+      <!-- 4. TRUST PROOF 2: B2B CC Installations + Location -->
+      <div>
+        <div class="fs-section-row">
+          <div class="fs-section-label" style="margin-bottom:0">Optigal® Sites Near You</div>
+          <span class="fs-section-sub">Tap to share location</span>
+        </div>
+        <div class="h-scroll-row" id="fsB2bProof"></div>
+      </div>
+
+      <!-- 5. YOUTUBE CONTENT (HORIZONTAL SCROLL) -->
+      <div>
+        <div class="fs-section-row">
+          <div class="fs-section-label" style="margin-bottom:0">Optigal® Videos</div>
+          <button type="button" class="btn-mini-link" id="fsWatchAllBtn">All 10 →</button>
+        </div>
+        <div class="h-scroll-row" id="fsYoutubeRow"></div>
+      </div>
+
+      <!-- 5. Sales Desk (2x2) -->
+      <div>
+        <div class="fs-section-label">Sales Desk</div>
+        <div class="fs-quick-grid">
+          <button type="button" class="quick-card blush" data-launch="invoices">
+            <div class="qc-icon-circle">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E52726" stroke-width="2.2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <div class="qc-text">
+              <strong>Invoices</strong>
+              <span id="fsInvoiceSub">3 total • 1 action</span>
+            </div>
+          </button>
+
+          <button type="button" class="quick-card mint" data-launch="proof">
+            <div class="qc-icon-circle">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#166534" stroke-width="2.2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="qc-text">
+              <strong>Stock &amp; Ads</strong>
+              <span id="fsStockSub">10km ads active</span>
+            </div>
+          </button>
+
+          <button type="button" class="quick-card neutral" data-launch="account">
+            <div class="qc-icon-circle">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#111" stroke-width="2.2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div class="qc-text">
+              <strong>My Account</strong>
+              <span>Milestones &amp; Tier</span>
+            </div>
+          </button>
+
+          <button type="button" class="quick-card neutral" id="fsLearnBtn">
+            <div class="qc-icon-circle">
+              <!-- YouTube Red Icon -->
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="#E52726"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+            </div>
+            <div class="qc-text">
+              <strong>Learn Hub</strong>
+              <span>10 Videos • Guides</span>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- 6. RECOGNIZED: BANDHAN ARENA -->
+      <div>
+        <div class="fs-section-row">
+          <div class="fs-section-label" style="margin-bottom:0">Bandhan Arena • Live Activities</div>
+          <button type="button" class="btn-mini-link" data-launch="activities">View All →</button>
+        </div>
+        <div class="arena-bento" data-launch="activities" role="button" tabindex="0">
+          <div class="arena-top">
+            <span class="arena-live-pill">● LIVE CONTEST</span>
+            <span class="arena-pts">+500 Bonus Pts</span>
+          </div>
+          <h3>Little Builders Drawing Contest</h3>
+          <p>Kids ages 5–14 • Upload drawing &amp; win +500 pts.</p>
+          <div class="arena-foot">
+            <span>Site Selfie &amp; Pitch also live</span>
+            <span class="arena-cta">Enter →</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== INNER WORKSPACES ==================== -->
+    <main class="mobile-main hidden" id="mainWorkspace">
+      <!-- SELL WORKSPACE -->
+      <div id="sellWorkspace">
+        <!-- TAB 1: QUOTE & GUIDE -->
+        <section class="tab-panel active" id="panel-sell">
+          <div class="segmented-control">
+            <button type="button" class="seg-btn active" data-subtab="quote">Quick Quote</button>
+            <button type="button" class="seg-btn" data-subtab="recommend">Product Guide</button>
+          </div>
+
+          <div class="subtab-panel active" id="subtab-quote">
+            <div class="soft-card">
+              <div class="step-block">
+                <div class="step-head">
+                  <span class="step-title">1. Optigal® Range</span>
+                  <button type="button" class="btn-mini-link" id="resetQuoteBtn">Reset</button>
+                </div>
+                <div class="tier-chips" id="tierChips"></div>
+                <div class="tier-spec-line" id="tierSpecLine">ZM80 • SMP • 10 Years Warranty</div>
+              </div>
+
+              <div class="step-block">
+                <div class="step-head">
+                  <span class="step-title">2. Size &amp; Rate</span>
+                  <div class="unit-pill-switch" id="unitToggle">
+                    <button type="button" class="unit-btn active" data-unit="length">Length (ft)</button>
+                    <button type="button" class="unit-btn" data-unit="weight">Weight (kg)</button>
+                  </div>
+                </div>
+                <div class="compact-grid-2">
+                  <div class="field">
+                    <label for="qThickness">Thickness</label>
+                    <select id="qThickness">
+                      <option value="0.35">0.35 mm</option><option value="0.40">0.40 mm</option>
+                      <option value="0.45">0.45 mm</option><option value="0.50" selected>0.50 mm</option>
+                      <option value="0.55">0.55 mm</option><option value="0.60">0.60 mm</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="qWidth">Width</label>
+                    <select id="qWidth">
+                      <option value="1060" selected>1060 mm</option><option value="1220">1220 mm</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="compact-grid-2" style="margin-top: 10px;">
+                  <div class="field">
+                    <label for="qQuantity" id="qQuantityLabel">Length (ft)</label>
+                    <input type="number" id="qQuantity" value="350" min="10" step="10" />
+                  </div>
+                  <div class="field">
+                    <div class="label-with-action">
+                      <label for="qRate" id="qRateLabel">Rate (₹/ft)</label>
+                      <button type="button" class="btn-mini-link" id="resetRateBtn">Indicative</button>
+                    </div>
+                    <input type="number" id="qRate" value="63" min="1" step="0.5" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="step-block" style="border-bottom:none;margin-bottom:0;padding-bottom:6px">
+                <div class="step-head">
+                  <span class="step-title">3. Finish &amp; Customer</span>
+                  <span class="selected-colour-name" id="selectedColourLabel">Brick Red</span>
+                </div>
+                <div class="colour-dots-row" id="colourSwatches"></div>
+                <div class="compact-grid-2" style="margin-top: 12px;">
+                  <div class="field">
+                    <label for="qProfile">Profile</label>
+                    <select id="qProfile">
+                      <option value="Trapezoidal (Hi-Rib)">Hi-Rib</option>
+                      <option value="Tile Profile (Classic)">Tile Profile</option>
+                      <option value="Sinusoidal (Corrugated)">Corrugated</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="qLang">Language</label>
+                    <select id="qLang">
+                      <option value="en">English</option><option value="hi">हिन्दी</option>
+                      <option value="mr">मराठी</option><option value="gu">ગુજરાતી</option>
+                      <option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="bn">বাংলা</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="compact-grid-2" style="margin-top: 10px;">
+                  <div class="field"><input type="text" id="qCustomerName" placeholder="Customer name" /></div>
+                  <div class="field"><input type="tel" id="qCustomerPhone" placeholder="WhatsApp number" /></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="quote-receipt">
+              <div class="qr-top">
+                <div>
+                  <div class="qr-title" id="qpProduct">Optigal® Pure • 0.50mm × 1060mm</div>
+                  <div class="qr-sub" id="qpMeta">Brick Red • Hi-Rib • 350 ft</div>
+                </div>
+                <span class="qr-warranty" id="qpWarrantyBadge">10Y</span>
+              </div>
+              <div class="qr-bottom">
+                <div><span class="qr-k">Estimated Total</span><div class="qr-total" id="qpTotal">₹22,050</div></div>
+                <div class="qr-rate-tag" id="qpRate">₹63 / ft</div>
+              </div>
+            </div>
+
+            <div class="share-btn-row">
+              <button type="button" class="btn btn-whatsapp btn-grow" id="shareWhatsappBtn">Share on WhatsApp</button>
+              <button type="button" class="btn btn-pill-outline" id="downloadQuoteCardBtn">Save Card</button>
+              <button type="button" class="btn btn-pill-outline" id="copyQuoteMsgBtn">Copy</button>
+            </div>
+          </div>
+
+          <div class="subtab-panel" id="subtab-recommend">
+            <div class="soft-card">
+              <h2 class="card-title-clean">Match Application</h2>
+              <div class="app-selector" id="appSelector"></div>
+              <div class="recommendation-result" id="recommendationResult"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 2: LEADS -->
+        <section class="tab-panel" id="panel-leads">
+          <div class="soft-card">
+            <div class="card-head">
+              <div><span class="eyebrow">PIPELINE</span><h2 class="card-title-clean">Today’s Opportunities</h2></div>
+              <button type="button" class="btn btn-dark btn-xs" id="toggleAddLeadBtn">+ Add Lead</button>
+            </div>
+            <form class="inline-form hidden" id="addLeadForm">
+              <div class="compact-grid-2">
+                <div class="field"><input type="text" id="newLeadName" placeholder="Customer name" required /></div>
+                <div class="field"><input type="tel" id="newLeadPhone" placeholder="Phone number" required /></div>
+              </div>
+              <div class="field"><input type="text" id="newLeadReq" placeholder="Requirement (e.g., 1,200 sq.ft. Pure)" required /></div>
+              <div class="share-btn-row">
+                <button type="submit" class="btn btn-red btn-xs btn-grow">Save Lead</button>
+                <button type="button" class="btn btn-pill-outline btn-xs" id="cancelAddLeadBtn">Cancel</button>
+              </div>
+            </form>
+            <div class="filter-scroll" id="leadFilterTabs">
+              <button type="button" class="filter-chip active" data-filter="all">All</button>
+              <button type="button" class="filter-chip" data-filter="new">New</button>
+              <button type="button" class="filter-chip" data-filter="followup">Follow-up</button>
+              <button type="button" class="filter-chip" data-filter="repeat">Repeat</button>
+            </div>
+            <div class="leads-list" id="leadsList"></div>
+          </div>
+        </section>
+
+        <!-- TAB 3: STOCK & LOCAL ADS -->
+        <section class="tab-panel" id="panel-proof">
+          <div class="soft-card">
+            <div class="card-head">
+              <div><span class="eyebrow">LOCAL LEAD ENGINE</span><h2 class="card-title-clean">My Stock &amp; Local Ads</h2></div>
+              <button type="button" class="btn btn-red btn-xs" id="toggleStockFormBtn">+ Declare</button>
+            </div>
+            <form class="inline-form hidden" id="declareStockForm">
+              <div class="compact-grid-2">
+                <div class="field">
+                  <label for="stTier">Range</label>
+                  <select id="stTier"><option value="core">Core (7Y)</option><option value="pure" selected>Pure (10Y)</option><option value="prime">Prime (15Y)</option><option value="pinnacle">Pinnacle (20Y)</option></select>
+                </div>
+                <div class="field">
+                  <label for="stColour">Colour</label>
+                  <select id="stColour"><option value="Brick Red">Brick Red</option><option value="Sky Blue">Sky Blue</option><option value="Moss Green">Moss Green</option><option value="Mist Grey">Mist Grey</option><option value="Royal Blue">Royal Blue</option></select>
+                </div>
+              </div>
+              <div class="compact-grid-2">
+                <div class="field">
+                  <label for="stBand">Ready Qty</label>
+                  <select id="stBand"><option value="1–2 MT">1–2 MT</option><option value="2–5 MT" selected>2–5 MT</option><option value="5+ MT">5+ MT</option></select>
+                </div>
+                <div class="field" style="justify-content:flex-end"><label class="check-row"><input type="checkbox" id="stBoost" checked /><span>Boost 10km Ads</span></label></div>
+              </div>
+              <div class="share-btn-row">
+                <button type="submit" class="btn btn-dark btn-xs btn-grow">Save &amp; Activate Ads</button>
+                <button type="button" class="btn btn-pill-outline btn-xs" id="cancelStockFormBtn">Cancel</button>
+              </div>
+            </form>
+            <div class="retailer-stock-list" id="retailerStockList"></div>
+          </div>
+
+          <div class="soft-card">
+            <div class="card-head">
+              <div><span class="eyebrow">DISTRIBUTOR DESK</span><h2 class="card-title-clean">Range &amp; Live Stock</h2></div>
+              <span class="badge-live">Today, 9:30 AM</span>
+            </div>
+            <div class="distributor-box">
+              <div><div class="dist-name">New Pashchim Maharashtra Patra Depo</div><div class="dist-meta">Yogesh Bedmutha • 255 Pincodes • MH</div></div>
+              <div class="dist-btns"><a href="tel:+919371882545" class="btn btn-pill-outline btn-xs">Call</a><button type="button" class="btn btn-whatsapp btn-xs" onclick="shareDistributorPing()">Ping</button></div>
+            </div>
+            <table class="price-table"><thead><tr><th>Range</th><th>Warranty</th><th>Indicative</th></tr></thead><tbody id="priceTableBody"></tbody></table>
+            <div class="sub-label">Ready Colours:</div>
+            <div class="stock-pills" id="colourStockPills"></div>
+          </div>
+        </section>
+
+        <!-- TAB 4: INVOICES -->
+        <section class="tab-panel" id="panel-invoices">
+          <div class="soft-card">
+            <div class="card-head">
+              <div><span class="eyebrow">CLOSE THE SALE</span><h2 class="card-title-clean">Invoices &amp; Approvals</h2></div>
+              <button type="button" class="btn btn-red btn-xs" id="toggleUploadInvoiceBtn">+ Register</button>
+            </div>
+            <form class="inline-form hidden" id="invoiceUploadForm">
+              <div class="field"><input type="text" id="invCustomer" placeholder="Customer / Project Name" required /></div>
+              <div class="compact-grid-2">
+                <div class="field"><input type="text" id="invNumber" placeholder="Invoice No." required /></div>
+                <div class="field"><input type="number" id="invQty" step="0.1" min="0.1" placeholder="Qty (MT)" required /></div>
+              </div>
+              <div class="field"><input type="file" id="invFile" accept="image/*,.pdf" /></div>
+              <div class="share-btn-row">
+                <button type="submit" class="btn btn-red btn-xs btn-grow">Submit Invoice</button>
+                <button type="button" class="btn btn-pill-outline btn-xs" id="cancelInvoiceBtn">Cancel</button>
+              </div>
+            </form>
+            <div class="invoice-list" id="invoiceList"></div>
+          </div>
+        </section>
+
+        <!-- TAB 5: EARNINGS (SELL TO EARN) -->
+        <section class="tab-panel" id="panel-earnings">
+          <div class="soft-card">
+            <div class="card-head">
+              <div><span class="eyebrow">SELL TO EARN</span><h2 class="card-title-clean">Lifetime &amp; Current</h2></div>
+              <div class="points-badge" id="earningsPtsBadge"><strong>1,35,000</strong> pts</div>
+            </div>
+            <div class="slab-box" style="background:var(--surface-sand)">
+              <div class="slab-row"><span>Lifetime Earned</span><strong>3,21,000 pts (₹1,60,500)</strong></div>
+              <div class="slab-row"><span>Nov '26: Diamond (69.45 MT)</span><span><strong>Elite (75 MT)</strong></span></div>
+              <div class="progress-track"><div class="progress-bar-fill" style="width: 93%;"></div></div>
+              <p class="slab-note"><strong>5.55 MT more</strong> in Nov to hit Elite Slab (90,000 pts).</p>
+            </div>
+            <div class="earnings-row"><span>Pending Slab Credit (Oct + Nov)</span><strong>1,65,000 pts</strong></div>
+            <div class="earnings-row"><span>Redeemed (23 Nov • Amazon Pay)</span><strong>₹10,500 (21,000 pts)</strong></div>
+            <div class="earnings-row"><span>Redeemable Balance</span><button type="button" class="btn-text" id="viewRewardsBtn">₹67,500 Catalogue →</button></div>
+          </div>
+
+          <div class="soft-card">
+            <div class="card-head">
+              <div><span class="eyebrow">ACTIVITY TIME SERIES</span><h2 class="card-title-clean">Purchases &amp; Points Unlocked</h2></div>
+            </div>
+            <div class="filter-scroll" id="timelineFilterTabs">
+              <button type="button" class="filter-chip active" data-tl="all">All</button>
+              <button type="button" class="filter-chip" data-tl="month">Purchases</button>
+              <button type="button" class="filter-chip" data-tl="unlock">Unlocked</button>
+              <button type="button" class="filter-chip" data-tl="redemption">Redeemed</button>
+            </div>
+            <div class="timeline-feed" id="purchaseTimelineList"></div>
+          </div>
+        </section>
+
+        <!-- TAB 6: BANDHAN ARENA (LIVE ACTIVITIES) -->
+        <section class="tab-panel" id="panel-activities">
+          <div class="soft-card" style="background:var(--surface-blush);border-color:#F4D5D7">
+            <span class="eyebrow">BANDHAN ARENA • LIVE</span>
+            <h2 class="card-title-clean">Little Builders Drawing Contest</h2>
+            <p class="learn-p">For your kids (ages 5–14)! Upload a clear photo of their drawing on any 1 of these 3 Optigal® themes to win school kits &amp; <strong>+500 Bandhan Points</strong>:</p>
+
+            <form class="inline-form" id="drawingContestForm" style="background:#fff;margin-top:10px;margin-bottom:0">
+              <div class="field">
+                <label for="artTopic">Choose Drawing Theme</label>
+                <select id="artTopic">
+                  <option value="cooler">1. My Dream Cooler Home (Heat-Reflective Roof)</option>
+                  <option value="storm">2. Steel That Protects Every Storm (ZM Strength)</option>
+                  <option value="green">3. Green Roofs, Greener Tomorrow (Sustainability)</option>
+                </select>
+              </div>
+              <div class="compact-grid-2">
+                <div class="field"><input type="text" id="childName" placeholder="Child's name &amp; age" required /></div>
+                <div class="field"><input type="file" id="artFile" accept="image/*" required /></div>
+              </div>
+              <button type="submit" class="btn btn-red btn-block">Upload Artwork Entry</button>
+            </form>
+            <div id="artSubmissionsList" class="submissions-list"></div>
+          </div>
+
+          <div class="soft-card">
+            <span class="eyebrow">RETAILER CHALLENGES</span>
+            <h2 class="card-title-clean">Participate &amp; Earn</h2>
+            <div class="activity-item">
+              <div>
+                <strong>📸 Site Selfie Showcase</strong>
+                <p>Upload a photo of a completed Optigal® roof with your customer. Featured on local ads + <strong>+300 pts</strong>.</p>
+              </div>
+              <button type="button" class="btn btn-dark btn-xs" id="siteSelfieBtn">Upload Photo</button>
+            </div>
+            <form class="inline-form hidden" id="siteSelfieForm">
+              <div class="compact-grid-2">
+                <div class="field"><input type="text" id="selfieSiteName" placeholder="Customer / Site name" required /></div>
+                <div class="field"><input type="file" id="selfieFile" accept="image/*" required /></div>
+              </div>
+              <div class="share-btn-row">
+                <button type="submit" class="btn btn-red btn-xs btn-grow">Submit Selfie (+300 pts)</button>
+                <button type="button" class="btn btn-pill-outline btn-xs" id="cancelSelfieBtn">Cancel</button>
+              </div>
+            </form>
+            <div class="activity-item">
+              <div>
+                <strong>🎙️ 60-Sec Local Pitch Challenge</strong>
+                <p>Share how you explain ZM120 vs local sheets in your local language. Top 10 win Gold coins (+200 pts).</p>
+              </div>
+              <button type="button" class="btn btn-pill-outline btn-xs" id="pitchChallengeBtn">Submit Entry</button>
+            </div>
+            <form class="inline-form hidden" id="pitchChallengeForm">
+              <div class="field">
+                <select id="pitchLang">
+                  <option value="Hindi">Hindi</option><option value="Marathi">Marathi</option>
+                  <option value="Gujarati">Gujarati</option><option value="Tamil">Tamil</option>
+                  <option value="Telugu">Telugu</option><option value="Bengali">Bengali</option>
+                  <option value="English">English</option>
+                </select>
+              </div>
+              <div class="field"><textarea id="pitchSummary" rows="2" placeholder="Write your 1-line local pitch hook..." required></textarea></div>
+              <div class="share-btn-row">
+                <button type="submit" class="btn btn-red btn-xs btn-grow">Submit Pitch (+200 pts)</button>
+                <button type="button" class="btn btn-pill-outline btn-xs" id="cancelPitchBtn">Cancel</button>
+              </div>
+            </form>
+            <div id="retailerArenaList" class="submissions-list"></div>
+          </div>
+        </section>
+
+        <!-- FEATURED TAB: MAGNESIUM (POWERED BY Mg+ JOURNEY) -->
+        <section class="tab-panel" id="panel-magnesium">
+          <div class="mg-hero-card">
+            <div class="mg-badge-row">
+              <span class="mg-element-chip">12 • Mg⁺</span>
+              <span class="mg-superpower">POWERED BY MAGNESIUM</span>
+            </div>
+            <h2 class="mg-title">Roshan Bumb's <strong>Growth Journey</strong></h2>
+            <p class="mg-sub">Jain Colour Roof Industries, Beed • Rank #14 India • 391.68 MT</p>
+          </div>
+
+          <!-- All-India Market Position Map (Leaflet) -->
+          <div class="soft-card">
+            <div class="card-head" style="margin-bottom:8px">
+              <div>
+                <span class="eyebrow">ALL-INDIA MARKET POSITION</span>
+                <h3 class="card-title-clean">Retailer Rank Map</h3>
+              </div>
+              <div style="display:flex;gap:5px">
+                <button type="button" class="btn btn-dark btn-xs" id="mapZoomIndiaBtn">All India</button>
+                <button type="button" class="btn btn-pill-outline btn-xs" id="mapZoomBeedBtn">Beed</button>
+              </div>
+            </div>
+            <div id="mgLeafletMap" class="leaflet-map-box"></div>
+            <div class="xy-detail-pill" id="mgMapDetail">Tap any bubble across India to compare volume &amp; rank</div>
+          </div>
+
+          <!-- Aspirational Mg+ Journey & Habit-Forming Time Series -->
+          <div class="soft-card">
+            <div class="card-head" style="margin-bottom:8px">
+              <div>
+                <span class="eyebrow">YOUR Mg⁺ JOURNEY • NEW PASHCHIM DB</span>
+                <h3 class="card-title-clean">Momentum &amp; Elite Streak</h3>
+              </div>
+              <span class="mc-dark-pill">5-Mo Streak 🔥</span>
+            </div>
+            <div class="journey-habit-strip">
+              <div class="jh-stat"><span>Total Business</span><strong>391.68 MT</strong></div>
+              <div class="jh-stat"><span>Nov Goal (Elite)</span><strong>69.5 / 75 MT</strong></div>
+              <div class="jh-stat highlight"><span>To Unlock</span><strong>+15,000 pts</strong></div>
+            </div>
+            <div id="mgXyChartWrap" class="xy-chart-wrap"></div>
+            <div class="xy-detail-pill" id="mgXyDetail">Tap any month to inspect your milestone</div>
+          </div>
+        </section>
+
+        <!-- TAB 7: MY ACCOUNT (RETAILER PROFILE & MILESTONES) -->
+        <section class="tab-panel" id="panel-account">
+          <div class="soft-card" style="background:var(--surface-lavender)">
+            <div class="account-header">
+              <div class="account-avatar">RB</div>
+              <div>
+                <h2 class="card-title-clean">Roshan Bumb</h2>
+                <div class="account-shop">Jain Colour Roof Industries • Beed, MH (431122)</div>
+                <div class="account-badges">
+                  <span class="mc-dark-pill">Diamond • Nov '26</span>
+                  <span class="mini-tag-white">FME: Shiv Kumar Bharadwaj</span>
+                </div>
+              </div>
+            </div>
+            <div class="account-stats-row">
+              <div><span>LT Approved</span><strong>391.68 MT</strong></div>
+              <div><span>LT Points</span><strong>3,21,000</strong></div>
+              <div><span>Member Since</span><strong>Aug 2026</strong></div>
+            </div>
+          </div>
+
+          <div class="soft-card">
+            <span class="eyebrow">JOURNEY • RE0120</span>
+            <h3 class="card-title-clean" style="margin-bottom:10px">Milestones Along the Way</h3>
+            <div class="milestone-list">
+              <div class="milestone-row done">
+                <span class="ms-dot">✓</span>
+                <div><strong>391.68 MT Approved Volume</strong><span>16 approved invoices • Rank #14 nationally</span></div>
+              </div>
+              <div class="milestone-row done">
+                <span class="ms-dot">✓</span>
+                <div><strong>2× Elite Slab Achiever</strong><span>131.6 MT (May '26) &amp; 126.92 MT (Oct '26)</span></div>
+              </div>
+              <div class="milestone-row done">
+                <span class="ms-dot">✓</span>
+                <div><strong>₹10,500 Redeemed</strong><span>Amazon Pay E-Gift Cards • 23 Nov 2026</span></div>
+              </div>
+              <div class="milestone-row next">
+                <span class="ms-dot">○</span>
+                <div><strong>Next: Add Optigal® Pure / Prime (ZM120)</strong><span>Currently 100% CORE — unlock 10–15Y higher-margin sales</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="soft-card" style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+            <div>
+              <strong style="font-size:13px;display:block">Demo Data</strong>
+              <span style="font-size:11.5px;color:var(--text-muted)">Saved locally on this device</span>
+            </div>
+            <button type="button" class="btn btn-pill-outline btn-xs" id="resetDemoBtn">Reset Demo</button>
+          </div>
+        </section>
+      </div>
+
+      <!-- ==================== LEARN HUB (BENTO HOME + DEEP PREMIUM-SELLING CONTENT) ==================== -->
+      <div id="learnWorkspace" class="hidden">
+        <!-- Learn Hub Bento Home -->
+        <div id="learnHome">
+          <div class="learn-hero">
+            <span class="mc-dark-pill" style="margin-bottom:10px;display:inline-block">OPTIGAL® ACADEMY</span>
+            <h1 class="editorial-title">How to sell <strong>premium</strong> steel with <strong>confidence.</strong></h1>
+            <p class="learn-hero-sub">Different Paint. Different Alloy. Global Steel.</p>
+          </div>
+
+          <!-- Learn Bento Cards (YouTube, WhatsApp, Value, Brand) -->
+          <div class="learn-bento-grid">
+            <button type="button" class="metric-card blush" data-ltab="value">
+              <div class="mc-top">
+                <span class="mc-icon-svg">💡</span>
+                <span class="mc-dark-pill">Playbook</span>
+              </div>
+              <div class="lb-title">How Optigal® Creates Value</div>
+              <div class="lb-sub">Sell cost-per-year, not rate-per-sheet. 4 shop-floor scripts.</div>
+            </button>
+
+            <button type="button" class="metric-card neutral" data-ltab="brand">
+              <div class="mc-top">
+                <span class="mc-icon-svg">🌍</span>
+                <span class="mc-dark-pill">Positioning</span>
+              </div>
+              <div class="lb-title">Brand &amp; 3 Pillars</div>
+              <div class="lb-sub">ArcelorMittal + Nippon Steel • Core to Pinnacle ladder.</div>
+            </button>
+
+            <button type="button" class="quick-card blush" data-ltab="media">
+              <div class="qc-icon-circle">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="#E52726"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.2 31.2 0 0 0 0 12a31.2 31.2 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.2 31.2 0 0 0 24 12a31.2 31.2 0 0 0-.5-5.8zM9.6 15.6V8.4l6.3 3.6-6.3 3.6z"/></svg>
+              </div>
+              <div class="qc-text"><strong>10 Videos</strong><span>Watch &amp; share</span></div>
+            </button>
+
+            <button type="button" class="quick-card mint" data-ltab="brochures">
+              <div class="qc-icon-circle">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="#128C7E"><path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.1-1.3A10 10 0 1 0 12 2z"/></svg>
+              </div>
+              <div class="qc-text"><strong>Brochures</strong><span>Download &amp; WA</span></div>
+            </button>
+
+            <button type="button" class="quick-card lavender" data-ltab="comparison">
+              <div class="qc-icon-circle">⚖️</div>
+              <div class="qc-text"><strong>ZM120 vs AZ150</strong><span>Proof table</span></div>
+            </button>
+
+            <button type="button" class="quick-card ice" data-ltab="faqs">
+              <div class="qc-icon-circle">🛡️</div>
+              <div class="qc-text"><strong>Warranty &amp; FAQs</strong><span>7–20Y coverage</span></div>
+            </button>
+
+            <button type="button" class="metric-card sand" data-ltab="quiz">
+              <div class="mc-top">
+                <span class="mc-icon-svg">🏆</span>
+                <span class="mc-dark-pill" id="quizStatusPill">+100 Pts</span>
+              </div>
+              <div class="lb-title">1-Min Optigal® Skill Check</div>
+              <div class="lb-sub">3 quick shop-floor objection questions to earn Bandhan points.</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Learn Sub-Pages (with Back to Learn Home) -->
+        <div id="learnDetailView" class="hidden">
+          <button type="button" class="btn-back-learn" id="backToLearnHome">← Back to Learn Hub</button>
+
+          <div class="learn-panel" id="ltab-value">
+            <div class="soft-card blush-border">
+              <span class="eyebrow">SELLING PREMIUM STEEL</span>
+              <h2 class="card-title-clean">1. How Optigal® Creates Value</h2>
+              <p class="learn-p">Customers compare sheet rate—until you show them <strong>cost per year</strong> and <strong>steel weight per sheet</strong>.</p>
+
+              <!-- Visual 1: Interactive Cost Per Year Comparison (15-Year Period) -->
+              <div class="infographic-card">
+                <div class="ig-header">
+                  <span class="ig-title">15-Year Total Cost (₹ / ft)</span>
+                  <span class="ig-badge" id="calcSavingsBadge">39% Cheaper</span>
+                </div>
+                <div class="compact-grid-2" style="margin-bottom:10px">
+                  <div class="field">
+                    <label for="calcLocalRate">Local Sheet (₹/ft)</label>
+                    <input type="number" id="calcLocalRate" value="96" min="20" max="300" />
+                  </div>
+                  <div class="field">
+                    <label for="calcOptigalTier">Optigal® Range</label>
+                    <select id="calcOptigalTier">
+                      <option value="core">Core (₹107/ft)</option>
+                      <option value="pure" selected>Pure (₹117/ft)</option>
+                      <option value="prime">Prime (₹132/ft)</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="ig-compare-grid">
+                  <div class="ig-col bad">
+                    <span class="ig-col-label">Cheap Local</span>
+                    <div class="ig-col-rate" id="calcLocalRateSub">₹52/ft × <strong>2 times</strong> (7.5 yrs)</div>
+                    <div class="ig-bar-wrap"><div class="ig-bar bad" id="calcLocalBar" style="height:82px"></div></div>
+                    <div class="ig-big-num" id="calcLocalTotal">₹104<span>/ft</span></div>
+                    <div class="ig-note" id="calcLocalYr">₹6.93/yr + 2× labour</div>
+                  </div>
+                  <div class="ig-col good">
+                    <span class="ig-col-label" id="calcOptigalLabel">Optigal® Pure</span>
+                    <div class="ig-col-rate" id="calcOptigalRateSub">₹63/ft × <strong>1 time</strong> (15+ yrs)</div>
+                    <div class="ig-bar-wrap"><div class="ig-bar good" id="calcOptigalBar" style="height:49px"></div></div>
+                    <div class="ig-big-num" id="calcOptigalTotal">₹63<span>/ft</span></div>
+                    <div class="ig-note" id="calcOptigalYr">₹4.20/yr • 1× roof</div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-whatsapp btn-xs btn-block" id="shareValueMathBtn" style="margin-top:10px">
+                  Share 15-Year Math on WhatsApp
+                </button>
+              </div>
+
+              <!-- Visual 2: Weight & Gauge Reality -->
+              <div class="infographic-card" style="background:var(--surface-lavender)">
+                <div class="ig-header">
+                  <span class="ig-title">Weight &amp; Gauge Reality (0.50 mm)</span>
+                  <span class="ig-badge dark">True TCT</span>
+                </div>
+                <div class="weight-compare">
+                  <div class="wc-row">
+                    <div class="wc-meta">
+                      <span><strong>Local “0.50mm”</strong> (actually ~0.42mm)</span>
+                      <span class="wc-loss">−16% Steel Weight</span>
+                    </div>
+                    <div class="wc-track"><div class="wc-fill bad" style="width:84%"></div></div>
+                    <div class="wc-sub">~160 kg less steel per Tonne—customer pays for weight they never get.</div>
+                  </div>
+                  <div class="wc-row">
+                    <div class="wc-meta">
+                      <span><strong>AM/NS Optigal®</strong> (True 0.50mm)</span>
+                      <span class="wc-win">100% Full Weight</span>
+                    </div>
+                    <div class="wc-track"><div class="wc-fill good" style="width:100%"></div></div>
+                    <div class="wc-sub">Laser-printed thickness on every sheet. Full strength, zero cheating.</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="value-box">
+                <strong>Self-Healing Cut Edges (ZM80/ZM120)</strong>
+                <p>Tell the customer: <em>“Every roof leaks first at screw holes and cut edges. Optigal® has Magnesium that seals those cuts automatically.”</em></p>
+              </div>
+            </div>
+          </div>
+
+          <div class="learn-panel" id="ltab-brand">
+            <div class="soft-card blush-border">
+              <span class="eyebrow">BRAND POSITIONING</span>
+              <h2 class="card-title-clean">2. How Optigal® is Positioned</h2>
+              <p class="learn-p"><strong>Global Steel:</strong> Built by AM/NS India (ArcelorMittal + Nippon Steel), trusted on India’s largest airports, factories, and homes.</p>
+              <div class="tier-list">
+                <div class="tier-row"><div><strong>Core</strong> • ZM80 • RMP</div><span class="tier-tag">7Y • Sheds</span></div>
+                <div class="tier-row"><div><strong>Pure</strong> • ZM80 • SMP</div><span class="tier-tag">10Y • Homes</span></div>
+                <div class="tier-row"><div><strong>Prime</strong> • ZM120 • PU/PA</div><span class="tier-tag red">15Y • PEB</span></div>
+                <div class="tier-row"><div><strong>Pinnacle</strong> • ZM120 • PVDF</div><span class="tier-tag red">20Y • Coastal</span></div>
+              </div>
+              <button type="button" class="btn btn-red btn-block" style="margin-top:12px" id="learnToQuoteBtn">Create Quote With This Range →</button>
+            </div>
+          </div>
+
+          <div class="learn-panel" id="ltab-comparison">
+            <div class="soft-card blush-border">
+              <span class="eyebrow">ALLOY SCIENCE</span>
+              <h2 class="card-title-clean">AZ150 vs. Patented ZM120</h2>
+              <table class="price-table">
+                <thead><tr><th>Parameter</th><th>AZ150</th><th>Optigal® ZM120</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Chemistry</strong></td><td>Al-Zn-Si</td><td class="win-cell">Zn-Al-Magnesium</td></tr>
+                  <tr><td><strong>Cut Edges</strong></td><td>Exposed steel</td><td class="win-cell">Self-healing Mg film</td></tr>
+                  <tr><td><strong>Coastal Life</strong></td><td>Standard</td><td class="win-cell">2x–3x longer edge life</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="learn-panel" id="ltab-media">
+            <div class="soft-card blush-border">
+              <span class="eyebrow">YOUTUBE SHOWCASE</span>
+              <h2 class="card-title-clean">10 Optigal® Videos</h2>
+              <div class="video-list" id="learnVideoList" style="margin-top:10px"></div>
+            </div>
+          </div>
+
+          <div class="learn-panel" id="ltab-brochures">
+            <div class="soft-card blush-border">
+              <span class="eyebrow">DOWNLOAD &amp; WHATSAPP</span>
+              <h2 class="card-title-clean">Product Brochures</h2>
+              <div class="brochure-list" id="learnBrochureList" style="margin-top:10px"></div>
+            </div>
+          </div>
+
+          <div class="learn-panel" id="ltab-faqs">
+            <div class="soft-card blush-border">
+              <span class="eyebrow">WARRANTY &amp; OBJECTIONS</span>
+              <h2 class="card-title-clean">Warranty &amp; FAQs</h2>
+              <div id="faqList"></div>
+            </div>
+          </div>
+
+          <div class="learn-panel" id="ltab-quiz">
+            <div class="soft-card blush-border">
+              <span class="eyebrow">OPTIGAL® CERTIFICATION</span>
+              <h2 class="card-title-clean">1-Min Skill Check</h2>
+              <p class="learn-p">Answer all 3 shop-floor scenarios correctly to earn <strong>+100 Bandhan Points</strong>.</p>
+              <div id="learnQuizContainer" style="margin-top:12px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Bottom Nav (Persistent across Home & Sell Screens) -->
+    <nav class="bottom-nav" id="sellBottomNav" aria-label="Sell Navigation">
+      <button type="button" class="nav-item active" data-tab="home">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        <span>Home</span>
+      </button>
+      <button type="button" class="nav-item" data-tab="sell">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        <span>Quote</span>
+      </button>
+      <button type="button" class="nav-item nav-featured-mg" data-tab="magnesium">
+        <span class="mg-nav-pill">Mg⁺</span>
+        <span>Magnesium</span>
+      </button>
+      <button type="button" class="nav-item" data-tab="leads">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+        <span>Leads</span>
+        <span class="nav-badge" id="navLeadCount">4</span>
+      </button>
+      <button type="button" class="nav-item" data-tab="account">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>Account</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Inline Lead Quote Drawer -->
+  <div class="modal-backdrop hidden" id="leadQuoteModal" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-head">
+        <div><span class="eyebrow" style="margin-bottom:0">REVISE &amp; SHARE</span><h3 id="lqCustomerTitle">Quote</h3></div>
+        <button type="button" class="modal-close" id="closeLeadQuoteModal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="compact-grid-2" style="margin-bottom:10px">
+          <div class="field"><label for="lqTier">Range</label><select id="lqTier"><option value="core">Core (7Y)</option><option value="pure">Pure (10Y)</option><option value="prime">Prime (15Y)</option><option value="pinnacle">Pinnacle (20Y)</option></select></div>
+          <div class="field"><label for="lqThickness">Thickness</label><select id="lqThickness"><option value="0.40">0.40 mm</option><option value="0.45">0.45 mm</option><option value="0.50">0.50 mm</option><option value="0.55">0.55 mm</option></select></div>
+        </div>
+        <div class="compact-grid-2" style="margin-bottom:10px">
+          <div class="field"><label for="lqQty">Length (ft)</label><input type="number" id="lqQty" value="400" min="10" step="10" /></div>
+          <div class="field"><label for="lqRate">Negotiated Rate (₹/ft)</label><input type="number" id="lqRate" value="63" min="1" step="0.5" /></div>
+        </div>
+        <div class="quote-receipt" style="margin-bottom:0">
+          <div class="qr-bottom"><div><span class="qr-k">Updated Total</span><div class="qr-total" id="lqTotal">₹25,200</div></div><div class="qr-rate-tag" id="lqRateTag">₹63 / ft</div></div>
+        </div>
+      </div>
+      <div class="modal-foot"><button type="button" class="btn btn-whatsapp btn-grow" id="lqShareBtn">Send Revised Quote on WhatsApp</button></div>
+    </div>
+  </div>
+
+  <!-- WhatsApp Message Preview Modal -->
+  <div class="modal-backdrop hidden" id="whatsappModal" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-head"><h3>WhatsApp Quote Preview</h3><button type="button" class="modal-close" id="closeWaModal" aria-label="Close">×</button></div>
+      <div class="modal-body"><textarea id="waPreviewText" rows="10"></textarea></div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-pill-outline" id="modalCopyBtn">Copy</button>
+        <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp btn-grow" id="modalOpenWaBtn">Open WhatsApp →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rewards Catalogue Modal -->
+  <div class="modal-backdrop hidden" id="rewardsModal" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <span class="eyebrow" style="margin-bottom:0">SELL TO EARN</span>
+          <h3>Rewards Catalogue</h3>
+        </div>
+        <button type="button" class="modal-close" id="closeRewardsModal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="rewards-balance-bar">
+          <span>Available Balance</span>
+          <strong id="rewardsModalBalance">2,450 pts</strong>
+        </div>
+        <div class="rewards-list" id="rewardsCatalogueList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Player Modal -->
+  <div class="modal-backdrop hidden" id="videoPlayerModal" role="dialog" aria-modal="true">
+    <div class="modal">
+      <div class="modal-head">
+        <div>
+          <span class="eyebrow" style="margin-bottom:0">OPTIGAL® VIDEO</span>
+          <h3 id="vpTitle">Video</h3>
+        </div>
+        <button type="button" class="modal-close" id="closeVideoModal" aria-label="Close">×</button>
+      </div>
+      <div class="modal-body" style="padding:0">
+        <div class="video-frame-wrap">
+          <iframe id="vpIframe" src="" title="Optigal Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <div class="modal-foot">
+        <button type="button" class="btn btn-whatsapp btn-grow" id="vpShareWaBtn">Share on WhatsApp</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

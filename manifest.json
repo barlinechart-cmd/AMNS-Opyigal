@@ -1,0 +1,9 @@
+{
+  "name": "AM/NS Bandhan — Optigal® Partner App",
+  "short_name": "AM/NS Bandhan",
+  "description": "Sell, Learn & Grow with AM/NS Optigal® — Quick Quotes, Leads, Stock & Ads, and Academy.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#FAFAFB",
+  "theme_color": "#E52726"
+}
