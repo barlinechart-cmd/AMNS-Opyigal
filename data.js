@@ -701,7 +701,7 @@ const B2B_INSTALLATIONS = [
     location: 'MIDC Chakan, MH',
     spec: 'Prime • 0.55mm ZM120',
     scale: '42,000 sq.ft.',
-    image: 'assets/b2b-chakan.jpg',
+    image: 'b2b-chakan.jpg',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=MIDC+Chakan+Pune+Maharashtra',
     whatsappText: 'B2B Proof: Chakan Auto Plant (42,000 sq.ft.) is built with *AM/NS Optigal® Prime (ZM120)*.\n\n📍 Site Location: https://www.google.com/maps/search/?api=1&query=MIDC+Chakan+Pune+Maharashtra\n\nAsk Jain Colour Roof Industries, Beed for a quote!'
   },
@@ -712,7 +712,7 @@ const B2B_INSTALLATIONS = [
     location: 'MIDC Waluj, Chh. Sambhajinagar',
     spec: 'Pinnacle • 0.50mm PVDF',
     scale: '68,000 sq.ft.',
-    image: 'assets/b2b-ranjangaon.jpg',
+    image: 'b2b-ranjangaon.jpg',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=MIDC+Waluj+Aurangabad+Maharashtra',
     whatsappText: 'B2B Proof: Waluj Cold & Logistics Hub (68,000 sq.ft.) runs on *AM/NS Optigal® Pinnacle (ZM120 + PVDF, 20Y Warranty)*.\n\n📍 Site Location: https://www.google.com/maps/search/?api=1&query=MIDC+Waluj+Aurangabad+Maharashtra'
   },
@@ -723,7 +723,7 @@ const B2B_INSTALLATIONS = [
     location: 'Beed MIDC, MH',
     spec: 'Pure • 0.50mm SMP',
     scale: '18,500 sq.ft.',
-    image: 'assets/b2b-baramati.jpg',
+    image: 'b2b-baramati.jpg',
     mapUrl: 'https://www.google.com/maps/search/?api=1&query=MIDC+Beed+Maharashtra',
     whatsappText: 'Local Proof in Beed: Agro & Ginning sheds (18,500 sq.ft.) use *AM/NS Optigal® Pure (ZM80 + SMP)* for cooler interiors.\n\n📍 Site Location: https://www.google.com/maps/search/?api=1&query=MIDC+Beed+Maharashtra'
   }

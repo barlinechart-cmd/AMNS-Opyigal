@@ -1,4 +1,4 @@
-const CACHE_NAME = 'amns-bandhan-v20';
+const CACHE_NAME = 'amns-bandhan-v21';
 const ASSETS = [
   './',
   './index.html',
@@ -6,9 +6,9 @@ const ASSETS = [
   './data.js',
   './app.js',
   './manifest.json',
-  './assets/b2b-chakan.jpg',
-  './assets/b2b-ranjangaon.jpg',
-  './assets/b2b-baramati.jpg'
+  './b2b-chakan.jpg',
+  './b2b-ranjangaon.jpg',
+  './b2b-baramati.jpg'
 ];
 
 self.addEventListener('install', (event) => {
